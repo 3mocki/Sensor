@@ -2,7 +2,6 @@ import requests, json
 from Msgtype import *
 from ResultCode import *
 from globalVar import *
-from STATE import *
 
 class DCA_class:
     msgtype = SSP_DCAREQ
@@ -16,6 +15,7 @@ class DCA_class:
     }
 
     rcvdPayload = None
+
     # eId is Sensor Serial Number
     eId = ""
     cId = ""
@@ -38,6 +38,7 @@ class DCA_class:
         global response, rt
         print("Timer Working")
         response = requests.post(url_1, json=self.packedMsg())
+        print("(check)State in Sensor : HALF_CID_ALLOCATED_STATE")
         rt = response.elapsed.total_seconds()
         print('(check)rspTime :' + str(rt))
         return rt
@@ -78,8 +79,10 @@ class DCA_class:
             self.TTI = self.json_response['payload']['tti']
             self.MOBF = self.json_response['payload']['mobf']
             print("(check)cId :" + str(self.cId))
+            print("(check)State in Sensor : CID_ALLOCATED_STATE")
             return RES_SUCCESS
         else:
+        	print("(check)State in Sensor : IDLE_STATE")
             return RES_FAILED
 
     def init(self):

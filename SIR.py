@@ -3,7 +3,6 @@ from uuid import getnode as get_mac
 from Msgtype import *
 from ResultCode import *
 from globalVar import *
-from STATE import *
 
 class SIR_class:
     # mac = get_mac()  # 1.3 WiFi MAC Address

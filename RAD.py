@@ -1,6 +1,5 @@
 import requests, json, time, csv
 from Msgtype import *
-# from STATE import *
 # from ResultCode import *
 from globalVar import *
 from Sender import *
@@ -109,3 +108,4 @@ class RAD_class:
         print("(check)eId(=cId) : " + str(self.eId))
 
         self.setTimer()
+
