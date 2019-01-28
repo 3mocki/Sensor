@@ -91,3 +91,4 @@ class MySqlite_24:
     def closeDB(self):
         self.cursor.close()
         self.db.close()
+

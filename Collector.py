@@ -13,7 +13,7 @@ data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # calibration data of 25-000160 Indoor Sensor
 we_zero = [295, 391, 347, 345]
 ae_zero = [282, 390, 296, 255]
-sens = [0.228, 0.399, 0.276, 0.318]
+sens = [0.195, 0.399, 0.276, 0.318]
 
 # temp_n is going to no2, o3, co, so2 in 2 X 2 list
 temp_n = [[1.18, 1.18, 1.18, 1.18, 1.18, 1.18, 1.18, 2.00, 2.70],
@@ -74,6 +74,7 @@ def gpio_control(num):
 
 
 # get the voltage value
+# Digital Value(ADC Value) will convert to mV
 def adc_converter(value):
     adc = int(value)
     volt = float(adc * 5.0 / 1024)
@@ -138,7 +139,7 @@ def collect_Data():
                 temp_result = -30
             elif temp_result > 50:
                 temp_result = 50
-            print('Temperature : ' + str(round(temp_result, 2)) + 'degree celcius')
+            print('Temperature : ' + str(round(temp_result, 3)) + 'degree celcius')
             # choice temperature each sensor
             data[1] = round(temp_result, 2)
 
@@ -148,50 +149,50 @@ def collect_Data():
             ardOut = ard.readline()
             we_low = ardOut.rstrip(b'\n')
             we_value = adc_converter(we_low)
-            print(air_list[x - 1] + ' WE : ' + str(round(we_value, 2)) + 'mV')
+            print(air_list[x - 1] + ' WE : ' + str(round(we_value, 3)) + 'mV')
 
             # Measuring Auxiliary Electrode
             gpio_control(x * 2)
             ardOut = ard.readline()
             ae_low = ardOut.rstrip(b'\n')
             ae_value = adc_converter(ae_low)
-            print(air_list[x - 1] + ' AE : ' + str(round(ae_value, 2)) + 'mV')
+            print(air_list[x - 1] + ' AE : ' + str(round(ae_value, 3)) + 'mV')
 
             if x == 1:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
                 ppb_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
                             sens[x - 1]
-                no2 = round(ppb_value, 2)
+                no2 = round(ppb_value, 3)
                 data[2] = no2
-                print(air_list[x - 1] + ' : ' + str(round(ppb_value, 2)) + 'ppb')
+                print(air_list[x - 1] + ' : ' + str(no2) + 'ppb')
 
             elif x == 2:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
+                ppm_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
                             sens[x - 1]
-                o3 = round(ppb_value / 1000, 2)
+                o3 = round(ppm_value / 1000, 3)
                 data[3] = o3
-                print(air_list[x - 1] + ' : ' + str(round(ppb_value / 1000, 2)) + 'ppm')
+                print(air_list[x - 1] + ' : ' + str(o3) + 'ppm')
 
             elif x == 3:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
+                ppm_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
                             sens[x - 1]
-                co = round(ppb_value / 1000, 2)
+                co = round(ppm_value / 1000, 3)
                 data[4] = co
-                print(air_list[x - 1] + ' : ' + str(round(ppb_value / 1000, 2)) + 'ppm')
+                print(air_list[x - 1] + ' : ' + str(co) + 'ppm')
 
             elif x == 4:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
                 ppb_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
                             sens[x - 1]
-                so2 = round(ppb_value, 2)
+                so2 = round(ppb_value, 3)
                 data[5] = so2
-                print(air_list[x - 1] + ' : ' + str(round(ppb_value, 2)) + 'ppb')
+                print(air_list[x - 1] + ' : ' + str(so2) + 'ppb')
 
             print('n Table :' + str(temp))
 
@@ -204,12 +205,12 @@ def collect_Data():
             hppcf = 240 * (v ** 6) - 2491.3 * (v ** 5) + 9448.7 * (v ** 4) - 14840 * (v ** 3) + 10684 * (
                     v ** 2) + 2211.8 * v + 7.9623
             ugm3 = .518 + .00274 * hppcf
-            pm25 = round(ugm3, 2)
+            pm25 = round(ugm3, 3)
             data[6] = pm25
-            pm10 = round(ugm3, 2)
+            pm10 = round(ugm3, 3)
             data[7] = pm10
-            print(air_list[x - 1] + ' : ' + str(round(ugm3, 2)) + 'ug/m^3')
-            print(air_list[x] + ' : ' + str(round(ugm3, 2)) + 'ug/m^3')
+            print(air_list[x - 1] + ' : ' + str(pm25) + 'ug/m^3')
+            print(air_list[x] + ' : ' + str(pm10) + 'ug/m^3')
             print('*******************************')
 
 
