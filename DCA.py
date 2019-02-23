@@ -48,13 +48,14 @@ class DCA_class:
             self.setTimer()
         else:
             self.verifyMsgHeader()
-            if self.rcvdPayload != RES_FAILED:
+            if rcvdPayload != RES_FAILED:
                 print("check")
-                return self.rcvdPayload
+                return rcvdPayload
             else:
                 self.rcvdMsg()
 
     def verifyMsgHeader(self):
+        global rcvdPayload
         rcvdType = self.json_response['header']['msgType'] # rcvdMsgType
         rcvdPayload = self.json_response['payload']
         # rcvdLength = len(str(self.rcvdPayload)) # rcvdLenOfPayload
