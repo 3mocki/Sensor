@@ -73,7 +73,7 @@ class RAD_class:
             return RES_FAILED
 
     def UnpackMsg(self):
-        rcvdMsgPayload = json_response['payload']
+        rcvdMsgPayload = self.json_response['payload']
         print(str(self.rcvdMsgPayload))
 
     def read_RAD(self):
