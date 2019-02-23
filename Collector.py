@@ -201,7 +201,7 @@ def collect_Data():
             ardOut = ard.readline()
             pm25_low = ardOut.rstrip(b'\n')
             pm25_value = adc_converter(pm25_low)
-            v = pm25_value
+            v = pm25_value / 1000
             hppcf = 240 * (v ** 6) - 2491.3 * (v ** 5) + 9448.7 * (v ** 4) - 14840 * (v ** 3) + 10684 * (
                     v ** 2) + 2211.8 * v + 7.9623
             ugm3 = .518 + .00274 * hppcf
