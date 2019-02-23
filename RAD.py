@@ -34,6 +34,7 @@ class RAD_class:
         return packedMsg
 
     def setTimer(self):
+        global response
         print("Timer Working")
         response = requests.post(url_2, json=self.packedMsg())
         print('(check)State in Sensor : CID_ALLOCATED_STATE')
@@ -111,5 +112,7 @@ class RAD_class:
         print("(check)eId(=cId) : " + str(self.eId))
 
         self.setTimer()
-        self.UnpackMsg()
+
+        t = response.json()
+        print('(check)Received Msg : ' + str(t))  # check log
 
