@@ -36,6 +36,7 @@ class RAD_class:
     def setTimer(self):
         print("Timer Working")
         response = requests.post(url_2, json=self.packedMsg())
+        print('(check)State in Sensor : CID_ALLOCATED_STATE')
         # print('RAD-ACK => ', response.json())
         rt = response.elapsed.total_seconds()
         print('(check)rspTime :' + str(rt))
@@ -71,7 +72,9 @@ class RAD_class:
         else:
             return RES_FAILED
 
-    # def UnpackMsg(self):
+    def UnpackMsg(self):
+        rcvdMsgPayload = json_response['payload']
+        print(str(self.rcvdMsgPayload))
 
     def read_RAD(self):
 
@@ -108,4 +111,5 @@ class RAD_class:
         print("(check)eId(=cId) : " + str(self.eId))
 
         self.setTimer()
+        self.UnpackMsg()
 

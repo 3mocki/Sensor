@@ -77,8 +77,8 @@ def gpio_control(num):
 # Digital Value(ADC Value) will convert to mV
 def adc_converter(value):
     adc = int(value)
-    volt = float(adc * 5.0 / 1024)
-    return volt
+    mV = float(adc * 1023) * 5000 # to get millivolt
+    return mV
 
 
 def temp_choice(tmp, x):
@@ -134,7 +134,7 @@ def collect_Data():
             ardOut = ard.readline()
             temp_low = ardOut.rstrip(b'\n')
             temp_value = adc_converter(temp_low)
-            temp_result = (float(temp_value) - 0.5) * 100.0
+            temp_result = (float(temp_value) - 500) * 0.1 # 500 is offset & 0.1 is Output Voltage Scailing
             if temp_result <= -30:
                 temp_result = -30
             elif temp_result > 50:
@@ -161,7 +161,7 @@ def collect_Data():
             if x == 1:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
                 no2 = round(ppb_value, 3)
                 data[2] = no2
@@ -170,25 +170,25 @@ def collect_Data():
             elif x == 2:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppm_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
-                o3 = round(ppm_value / 1000, 3)
+                o3 = round(ppb_value / 1000, 3)
                 data[3] = o3
                 print(air_list[x - 1] + ' : ' + str(o3) + 'ppm')
 
             elif x == 3:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppm_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
-                co = round(ppm_value / 1000, 3)
+                co = round(ppb_value / 1000, 3)
                 data[4] = co
                 print(air_list[x - 1] + ' : ' + str(co) + 'ppm')
 
             elif x == 4:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_value * 1000 - we_zero[x - 1]) - temp * (ae_value * 1000 - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
                 so2 = round(ppb_value, 3)
                 data[5] = so2

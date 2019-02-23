@@ -6,6 +6,7 @@ from globalVar import *
 class DCA_class:
     msgtype = SSP_DCAREQ
 
+    # defined by server
     payload = {
         "lat": '32.892425',
         "lng": '-117.234657',
@@ -13,8 +14,6 @@ class DCA_class:
         "state": 'Q99',
         "city": 'Q16552'
     }
-
-    rcvdPayload = None
 
     # eId is Sensor Serial Number
     eId = ""
@@ -82,7 +81,7 @@ class DCA_class:
             print("(check)State in Sensor : CID_ALLOCATED_STATE")
             return RES_SUCCESS
         else:
-        	print("(check)State in Sensor : IDLE_STATE")
+            print("(check)State in Sensor : IDLE_STATE")
             return RES_FAILED
 
     def init(self):
