@@ -52,11 +52,11 @@ def o3Aqi_8(o3aver_8):
     elif 0.086 <= o3aver_8 <= 0.105:
         o3aqi = (((o3aver_8 - 0.086) * (200 - 151)) / (0.105 - 0.086)) + 151
         return o3aqi
-    elif 0.116 <= o3aver_8 <= 0.374:
-        o3aqi = (((o3aver_8 - 0.116) * (300 - 201)) / (0.374 - 0.116)) + 201
+    elif 0.106 <= o3aver_8 <= 0.200:
+        o3aqi = (((o3aver_8 - 0.106) * (300 - 201)) / (0.200 - 0.106)) + 201
         return o3aqi
     else:
-        return 501
+        return 500
 
 # 8 hour
 def coAqi(coaver):
@@ -79,7 +79,7 @@ def coAqi(coaver):
         co_aqi = (((coaver - 30.5) * (500 - 301)) / (50.4 - 30.5)) + 301
         return co_aqi
     else:
-        return 501
+        return 500
 
 # 1 hour
 def so2Aqi(so2aver):
@@ -106,17 +106,17 @@ def so2Aqi(so2aver):
 
 # 24 hour
 def pm25Aqi(pm25aver):
-    if 0 <= pm25aver <= 15.4:
-        pm25aqi = (((pm25aver - 0) * (50 - 0)) / (15.4 - 0)) + 0
+    if 0 <= pm25aver <= 12:
+        pm25aqi = (((pm25aver - 0) * (50 - 0)) / (12 - 0)) + 0
         return pm25aqi
-    elif 15.5 <= pm25aver <= 40.4:
-        pm25aqi = (((pm25aver - 15.5) * (100 - 51)) / (40.4 - 15.5)) + 51
+    elif 12.1 <= pm25aver <= 35.4:
+        pm25aqi = (((pm25aver - 12.1) * (100 - 51)) / (35.4 - 12.1)) + 51
         return pm25aqi
-    elif 40.4 <= pm25aver <= 65.4:
-        pm25aqi = (((pm25aver - 40.4) * (150 - 101)) / (65.4 - 40.4)) + 101
+    elif 35.5 <= pm25aver <= 55.4:
+        pm25aqi = (((pm25aver - 35.5) * (150 - 101)) / (55.4 - 35.5)) + 101
         return pm25aqi
-    elif 65.5 <= pm25aver <= 150.4:
-        pm25aqi = (((pm25aver - 65.5) * (200 - 151)) / (150.4 - 65.5)) + 151
+    elif 55.5 <= pm25aver <= 150.4:
+        pm25aqi = (((pm25aver - 55.5) * (200 - 151)) / (150.4 - 55.5)) + 151
         return pm25aqi
     elif 150.5 <= pm25aver <= 250.4:
         pm25aqi = (((pm25aver - 150.5) * (300 - 201)) / (250.4 - 150.5)) + 201
@@ -125,7 +125,7 @@ def pm25Aqi(pm25aver):
         pm25aqi = (((pm25aver - 250.5) * (500 - 301)) / (500.4 - 250.5)) + 301
         return pm25aqi
     else:
-        return 501
+        return 500
 
 # 24 hour
 def pm10Aqi(pm10aver):
@@ -148,4 +148,4 @@ def pm10Aqi(pm10aver):
         pm10aqi = (((pm10aver - 425) * (500 - 301)) / (604 - 425)) + 301
         return pm10aqi
     else:
-        return 501
+        return 500
