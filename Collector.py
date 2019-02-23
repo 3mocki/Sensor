@@ -77,7 +77,7 @@ def gpio_control(num):
 # Digital Value(ADC Value) will convert to mV
 def adc_converter(value):
     adc = int(value)
-    mV = float(adc * 1023) * 5000 # to get millivolt
+    mV = float(adc / 1023) * 5000 # to get millivolt
     return mV
 
 
