@@ -10,12 +10,12 @@ air_list = ['no2', 'o3', 'co', 'so2', 'pm25', 'pm10']
 # timestamp, temp, no2, o3, co, so2, pm25, pm10, i, m
 data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-# calibration data of 25-000160 Indoor Sensor
+# calibration data of 25-000160 Indoor Sensor, Unit is mV
 we_zero = [295, 391, 347, 345]
 ae_zero = [282, 390, 296, 255]
 sens = [0.195, 0.399, 0.276, 0.318]
 
-# temp_n is going to no2, o3, co, so2 in 2 X 2 list
+# temp_n is going to no2, o3, co, so2 in 2 X 2 list, Unit is mV
 temp_n = [[1.18, 1.18, 1.18, 1.18, 1.18, 1.18, 1.18, 2.00, 2.70],
           [0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 0.18, 2.87],
           [1.40, 1.03, 0.85, 0.62, 0.30, 0.03, -0.25, -0.48, -0.80],
@@ -40,7 +40,6 @@ path_val = [path_val_gpio36, path_val_gpio13, path_val_gpio12, path_val_gpio69]
 
 numberOfData = 0
 csvRowCount = 0
-
 
 # set the gpio pins to OUTPUT mode
 def init_direction():
@@ -102,23 +101,22 @@ def temp_choice(tmp, x):
         return temp_n[x - 1][8]
 
 
-def write_rad(csvRowCount, numberOfData):
-    if csvRowCount == 10:
+def write_rad(numberOfData, csvRowCount):
+    if csvRowCount == 9:
         f = open('temp_RAD.csv', 'w', newline='')
-        f.truncate()
         wr = csv.writer(f)
 
         for i in air_sender:
             wr.writerow(i)
         f.close()
+        f.truncate()
         print("CSV CLEAR!!!")
         numberOfData += 1
         csvRowCount = 0
-        return csvRowCount, numberOfData
     else:
         numberOfData += 1
         csvRowCount += 1
-        return csvRowCount, numberOfData
+    return numberOfData, csvRowCount
 
 
 def collect_Data():
@@ -216,7 +214,7 @@ def collect_Data():
 
 def save_to_DS(r, z):
     if r % 10 == z:
-        air_sender[z][0] = data[0]  # timestamp=
+        air_sender[z][0] = data[0]  # timestamp
         air_sender[z][5] = data[1]  # temp
         air_sender[z][6] = data[2]  # no2
         air_sender[z][7] = data[3]  # o3
@@ -265,10 +263,7 @@ if __name__ == '__main__':
             db2.commitDB()
             db3.commitDB()
 
-            csvRowCount, numberOfData = write_rad(csvRowCount, numberOfData)
-
-            print('Data Number:' + str(data[8]))
-            print('CSVR Number:' + str(data[9]))
+            numberOfData, csvRowCount = write_rad(numberOfData, csvRowCount)
 
     except KeyboardInterrupt:
         db.closeDB()
