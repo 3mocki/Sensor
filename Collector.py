@@ -102,17 +102,18 @@ def temp_choice(tmp, x):
 
 
 def write_rad(numberOfData, csvRowCount):
-    if csvRowCount == 9:
+    if csvRowCount + 1 == 10:
         f = open('temp_RAD.csv', 'w', newline='')
         wr = csv.writer(f)
 
         for i in air_sender:
             wr.writerow(i)
         f.close()
-        f.truncate()
-        print("CSV CLEAR!!!")
         numberOfData += 1
         csvRowCount = 0
+    if csvRowCount == 10:
+        f = open('temp_RAD.csv', 'w', newline='')
+        f.truncate()
     else:
         numberOfData += 1
         csvRowCount += 1
