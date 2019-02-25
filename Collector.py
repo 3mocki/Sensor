@@ -102,7 +102,7 @@ def temp_choice(tmp, x):
 
 
 def write_rad(numberOfData, csvRowCount):
-    if csvRowCount + 1 == 10:
+    if csvRowCount == 9:
         f = open('temp_RAD.csv', 'w', newline='')
         wr = csv.writer(f)
 
