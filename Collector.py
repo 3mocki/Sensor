@@ -108,9 +108,11 @@ def write_rad(numberOfData, csvRowCount):
 
         for i in air_sender:
             wr.writerow(i)
+            print(air_sender[i])
         f.close()
         numberOfData += 1
         csvRowCount += 1
+
         if csvRowCount == 10:
             f = open('temp_RAD.csv', 'w', newline='')
             f.truncate()
