@@ -43,39 +43,39 @@ class RAD_class:
         print('(check)rspTime :' + str(rt))
         return rt
 
-    def rcvdMsg(self):
-        if self.rt > 5:
-            print("Retry Checking response time")
-            self.setTimer()  # 3.2
-        else:
-            self.verifyMsgHeader()
-            if rcvdPayload != RES_FAILED:
-                print("(check)RES_FAILED")
-                self.rt = 0
-                return rcvdPayload
-            else:
-                self.rcvdMsg()
+    # def rcvdMsg(self):
+    #     if self.rt > 5:
+    #         print("Retry Checking response time")
+    #         self.setTimer()  # 3.2
+    #     else:
+    #         self.verifyMsgHeader()
+    #         if rcvdPayload != RES_FAILED:
+    #             print("(check)RES_FAILED")
+    #             self.rt = 0
+    #             return rcvdPayload
+    #         else:
+    #             self.rcvdMsg()
 
-    def verifyMsgHeader(self):
-        global rcvdPayload
-        rcvdType = self.json_response['header']['msgType']  # rcvdMsgType
-        rcvdPayload = self.json_response['payload']
-        # rcvdLength = len(str(self.rcvdPayload)) # rcvdLenOfPayload
-        rcvdeId = self.json_response['header']['endpointId']  # rcvdEndpointId
-        # expLen = rcvdLength - msg.header_size
+    # def verifyMsgHeader(self):
+    #     global rcvdPayload
+    #     rcvdType = self.json_response['header']['msgType']  # rcvdMsgType
+    #     rcvdPayload = self.json_response['payload']
+    #     # rcvdLength = len(str(self.rcvdPayload)) # rcvdLenOfPayload
+    #     rcvdeId = self.json_response['header']['endpointId']  # rcvdEndpointId
+    #     # expLen = rcvdLength - msg.header_size
+    #
+    #     if rcvdeId == self.eId:  # rcvdEndpointId = SSN
+    #         stateCheck = 1
+    #         if stateCheck == RES_SUCCESS:
+    #             if rcvdType == self.msgtype:
+    #                 # if rcvdLength == expLen:
+    #                 return rcvdPayload
+    #     else:
+    #         return RES_FAILED
 
-        if rcvdeId == self.eId:  # rcvdEndpointId = SSN
-            stateCheck = 1
-            if stateCheck == RES_SUCCESS:
-                if rcvdType == self.msgtype:
-                    # if rcvdLength == expLen:
-                    return rcvdPayload
-        else:
-            return RES_FAILED
-
-    def UnpackMsg(self):
-        rcvdMsgPayload = self.json_response['payload']
-        print(str(self.rcvdMsgPayload))
+    # def UnpackMsg(self):
+    #     rcvdMsgPayload = self.json_response['payload']
+    #     print(str(self.rcvdMsgPayload))
 
     def read_RAD(self):
 
