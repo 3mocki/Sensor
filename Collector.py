@@ -111,7 +111,7 @@ def write_rad(numberOfData, csvRowCount):
             wr.writerow(i)
         f.close()
         numberOfData += 1
-        csvRowCount += 1
+        csvRowCount = 0
 
     else:
         numberOfData += 1
