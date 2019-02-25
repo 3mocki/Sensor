@@ -108,8 +108,9 @@ def write_rad(numberOfData, csvRowCount):
 
         for i in air_sender:
             wr.writerow(i)
-            print(air_sender[i])
         f.close()
+        for i in air_sender:
+            print(str(air_sender[i]))
         numberOfData += 1
         csvRowCount += 1
 
