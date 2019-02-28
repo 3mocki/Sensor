@@ -81,7 +81,7 @@ def adc_converter(value):
 
 
 def temp_choice(tmp, x):
-    if -30 <= tmp:
+    if -30 > tmp:
         return temp_n[x - 1][0]
     elif -30 <= tmp < -20:
         return temp_n[x - 1][1]
@@ -94,6 +94,7 @@ def temp_choice(tmp, x):
     elif 10 <= tmp < 20:
         return temp_n[x - 1][5]
     elif 20 <= tmp < 30:
+        print("This is it!")
         return temp_n[x - 1][6]
     elif 30 <= tmp < 40:
         return temp_n[x - 1][7]
@@ -132,12 +133,12 @@ def collect_Data():
             ardOut = ard.readline()
             temp_low = ardOut.rstrip(b'\n')
             temp_value = adc_converter(temp_low)
-            temp_result = (float(temp_value) - 500) * 0.1 # 500 is offset & 0.1 is Output Voltage Scailing
+            temp_result = (float(temp_value) - 500) * 0.1 # 500 is offset & 0.1 is Output Voltage Scaling
             if temp_result <= -30:
                 temp_result = -30
             elif temp_result > 50:
                 temp_result = 50
-            print('Temperature : ' + str(round(temp_result, 3)) + 'degree celcius')
+            print('Temperature : ' + str(round(temp_result, 2)) + 'degree celcius')
             # choice temperature each sensor
             data[1] = round(temp_result, 2)
 
@@ -147,14 +148,14 @@ def collect_Data():
             ardOut = ard.readline()
             we_low = ardOut.rstrip(b'\n')
             we_value = adc_converter(we_low)
-            print(air_list[x - 1] + ' WE : ' + str(round(we_value, 3)) + 'mV')
+            print(air_list[x - 1] + ' WE : ' + str(round(we_value, 2)) + 'mV')
 
             # Measuring Auxiliary Electrode
             gpio_control(x * 2)
             ardOut = ard.readline()
             ae_low = ardOut.rstrip(b'\n')
             ae_value = adc_converter(ae_low)
-            print(air_list[x - 1] + ' AE : ' + str(round(ae_value, 3)) + 'mV')
+            print(air_list[x - 1] + ' AE : ' + str(round(ae_value, 2)) + 'mV')
 
             if x == 1:
                 temp = temp_choice(temp_result, x)
