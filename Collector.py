@@ -94,7 +94,6 @@ def temp_choice(tmp, x):
     elif 10 <= tmp < 20:
         return temp_n[x - 1][5]
     elif 20 <= tmp < 30:
-        print("This is it!")
         return temp_n[x - 1][6]
     elif 30 <= tmp < 40:
         return temp_n[x - 1][7]
