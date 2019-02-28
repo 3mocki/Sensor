@@ -13,7 +13,7 @@ data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # calibration data of 25-000160 Indoor Sensor, Unit is mV
 we_zero = [295, 391, 347, 345]
 ae_zero = [282, 390, 296, 255]
-sens = [0.195, 0.399, 0.276, 0.318]
+sens = [0.228, 0.399, 0.267, 0.318]
 
 # temp_n is going to no2, o3, co, so2 in 2 X 2 list, Unit is mV
 temp_n = [[1.18, 1.18, 1.18, 1.18, 1.18, 1.18, 1.18, 2.00, 2.70],
