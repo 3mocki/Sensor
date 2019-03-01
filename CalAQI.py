@@ -102,7 +102,7 @@ def so2Aqi(so2aver):
         so2aqi = (((so2aver - 605) * (500 - 301)) / (1004 - 605)) + 301
         return so2aqi
     else:
-        return 501
+        return 500
 
 # 24 hour
 def pm25Aqi(pm25aver):
