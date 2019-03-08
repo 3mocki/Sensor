@@ -74,10 +74,10 @@ def gpio_control(num):
 # # When using Mezzanine's A0
 # # get the voltage value
 # # Digital Value(ADC Value) will convert to mV
-# def adc_converter(value):
-#     adc = int(value)
-#     mV = float(adc / 1023) * 5000 # to get millivolt
-#     return mV
+def adc_converter(value):
+    adc = int(value)
+    mV = float(adc / 1023) * 5000 # to get millivolt
+    return mV
 
 
 def temp_choice(tmp, x):
@@ -131,8 +131,8 @@ def collect_Data():
             gpio_control(x)
             ardOut = ard.readline()
             temp_low = ardOut.rstrip(b'\n')
-            # temp_value = adc_converter(temp_low)
-            temp_result = (float(temp_low) - 500) * 0.1 # 500 is offset & 0.1 is Output Voltage Scaling
+            temp_value = adc_converter(temp_low)
+            temp_result = (float(temp_value) - 500) * 0.1 # 500 is offset & 0.1 is Output Voltage Scaling
             if temp_result <= -30:
                 temp_result = -30
             elif temp_result > 50:
@@ -146,15 +146,15 @@ def collect_Data():
             gpio_control(x * 2 - 1)
             ardOut = ard.readline()
             we_low = ardOut.rstrip(b'\n')
-            # we_value = adc_converter(we_low)
-            print(air_list[x - 1] + ' WE : ' + str(round(we_low, 2)) + 'mV')
+            we_value = adc_converter(we_low)
+            print(air_list[x - 1] + ' WE : ' + str(round(we_value, 2)) + 'mV')
 
             # Measuring Auxiliary Electrode
             gpio_control(x * 2)
             ardOut = ard.readline()
             ae_low = ardOut.rstrip(b'\n')
-            # ae_value = adc_converter(ae_low)
-            print(air_list[x - 1] + ' AE : ' + str(round(ae_low, 2)) + 'mV')
+            ae_value = adc_converter(ae_low)
+            print(air_list[x - 1] + ' AE : ' + str(round(ae_value, 2)) + 'mV')
 
             if x == 1:
                 temp = temp_choice(temp_result, x)
@@ -198,8 +198,8 @@ def collect_Data():
             gpio_control(x * 2 - 1)
             ardOut = ard.readline()
             pm25_low = ardOut.rstrip(b'\n')
-            # pm25_value = adc_converter(pm25_low)
-            v = pm25_low / 1000
+            pm25_value = adc_converter(pm25_low)
+            v = pm25_value / 1000
             hppcf = 240 * (v ** 6) - 2491.3 * (v ** 5) + 9448.7 * (v ** 4) - 14840 * (v ** 3) + 10684 * (
                     v ** 2) + 2211.8 * v + 7.9623
             ugm3 = .518 + .00274 * hppcf
