@@ -3,8 +3,10 @@ from uuid import getnode as get_mac
 from Msgtype import *
 from ResultCode import *
 from globalVar import *
+from State import *
 
 class SIR_class:
+    currentState = IDLE_STATE
     # mac = get_mac()  # 1.3 WiFi MAC Address
     line = subprocess.getstatusoutput("/sbin/ifconfig | grep ether")
     line2 = str(line)[19:36]
@@ -63,9 +65,9 @@ class SIR_class:
         # expLen = rcvdLength - msg.header_size
 
         if rcvdeId == self.eId: # rcvdEndpointId = fnGetTemporarySensorId
-            stateCheck = 1
-            print("(check)SENSOR STATE : Half-SSN Informed State")
-            if stateCheck == RES_SUCCESS:
+            stateCheckResult = self.stateCheck(rcvdType)
+            print("(check)SENSOR STATE : " + str(stateCheckResult))
+            if stateCheckResult == RES_SUCCESS:
                 if rcvdType == self.msgType:
                     # if rcvdLength == expLen:
                     return rcvdPayload
@@ -83,7 +85,14 @@ class SIR_class:
                 print("(check) quit")
                 quit()
 
+    def stateCheck(self, msgType):
+        if msgType == SSP_SIRRSP:
+            if self.currentState == 0:
+                self.currentState = HALF_SSN_INFORMED_STATE
+                return self.currentState
+
     def init(self):
+        print('(check)current State :' + str(self.currentState))
         print('(check)mac in : ' + str(self.mac))
         print('(check)msgType : ' + str(self.msgType))
         print('(check)eId : ' + str(self.eId))
