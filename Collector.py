@@ -159,7 +159,7 @@ def collect_Data():
             if x == 1:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_low - we_zero[x - 1]) - temp * (ae_low - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
                 no2 = round(ppb_value, 3)
                 data[2] = no2
@@ -168,7 +168,7 @@ def collect_Data():
             elif x == 2:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_low - we_zero[x - 1]) - temp * (ae_low - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
                 o3 = round(ppb_value / 1000, 3)
                 data[3] = o3
@@ -177,7 +177,7 @@ def collect_Data():
             elif x == 3:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_low - we_zero[x - 1]) - temp * (ae_low - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
                 co = round(ppb_value / 1000, 3)
                 data[4] = co
@@ -186,7 +186,7 @@ def collect_Data():
             elif x == 4:
                 temp = temp_choice(temp_result, x)
                 # calculating ppb & ppm
-                ppb_value = ((we_low - we_zero[x - 1]) - temp * (ae_low - ae_zero[x - 1])) / \
+                ppb_value = ((we_value - we_zero[x - 1]) - temp * (ae_value - ae_zero[x - 1])) / \
                             sens[x - 1]
                 so2 = round(ppb_value, 3)
                 data[5] = so2
