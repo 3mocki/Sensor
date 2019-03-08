@@ -6,12 +6,12 @@ from globalVar import *
 
 class SIR_class:
     # mac = get_mac()  # 1.3 WiFi MAC Address
-    line=subprocess.getstatusoutput("/sbin/ifconfig | grep ether")
-    line2=str(line)[19:36]
-    mac=line2.replace(':', '')
+    line = subprocess.getstatusoutput("/sbin/ifconfig | grep ether")
+    line2 = str(line)[19:36]
+    mac = line2.replace(':', '')
 
     # 1.2 msgHeader[0]
-    msgtype = SSP_SIRREQ
+    msgType = SSP_SIRREQ
     # 1.5 msgHeader[1:2]
     payload = {
         "wmac": mac
@@ -27,7 +27,7 @@ class SIR_class:
         # 1.5 packedMsg include Header and Payload
         packedMsg = {
             "header": {
-                "msgType" : self.msgtype,
+                "msgType" : self.msgType,
                 "msgLen" : len(str(self.payload)), # 1.4 size(msgPayload)
                 "endpointId" : self.eId # 1.2 msgHeader[3:5]
             },
@@ -35,7 +35,7 @@ class SIR_class:
         }
         return packedMsg # 1.6 return packedMsg
 
-    def setTimer(self):
+    def responseTimer(self):
         global response, rt
         print("Timer Working")
         response = requests.post(url_1, json=self.packedMsg())  # 2.2 fnSendMsg => json
@@ -47,7 +47,7 @@ class SIR_class:
     def rcvdMsgPayload(self):
         if rt > 5:
             print("Retry Checking response time")
-            self.setTimer()  # 3.2 => go to setTimer 2.0
+            self.responseTimer()  # 3.2 => go to responseTimer 2.0
         else:
             self.verifyMsgHeader()
             if rcvdPayload != RES_FAILED:
@@ -64,8 +64,9 @@ class SIR_class:
 
         if rcvdeId == self.eId: # rcvdEndpointId = fnGetTemporarySensorId
             stateCheck = 1
+            print("(check)SENSOR STATE : Half-SSN Informed State")
             if stateCheck == RES_SUCCESS:
-                if rcvdType == self.msgtype:
+                if rcvdType == self.msgType:
                     # if rcvdLength == expLen:
                     return rcvdPayload
         else:
@@ -77,17 +78,17 @@ class SIR_class:
             print("(check)ssn :" + (self.ssn))
         else:
             if self.json_response['payload']['resultCode'] == RESCODE_SSP_SIR_CONFLICT_OF_TEMPORARY_SENSOR_ID:
-                self.setTimer()
+                self.responseTimer()
             else:
-                print("check quit")
+                print("(check) quit")
                 quit()
 
     def init(self):
-        print('(check)mac : ' + str(self.mac))
-        print('(check)msgtype : ' + str(self.msgtype))
+        print('(check)mac in : ' + str(self.mac))
+        print('(check)msgType : ' + str(self.msgType))
         print('(check)eId : ' + str(self.eId))
 
-        self.setTimer()
+        self.responseTimer()
 
         t = response.json()
         print('(check)Received Msg : ' + str(t))  # check log
