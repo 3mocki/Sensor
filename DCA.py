@@ -85,14 +85,14 @@ class DCA_class:
             return RES_FAILED
 
     def stateCheck(self, msgType):
-        if msgType == SSP_SIRRSP:
+        if msgType == SSP_DCARSP:
             if self.currentState == SSN_INFORMED_STATE:
                 self.currentState = HALF_CID_ALLOCATED_STATE
                 return self.currentState
 
     def init(self):
         print('(check)current State :' + str(self.currentState))
-        print("(check)msgtype : " + str(self.msgtype))
+        print("(check)msgType : " + str(self.msgtype))
         print("(check)eId(=SSN) : " + str(self.eId))
 
         self.setTimer()
