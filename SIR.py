@@ -87,6 +87,7 @@ class SIR_class:
 
     def stateCheck(self, msgType):
         if msgType == SSP_SIRRSP:
+            print(str(msgType))
             if self.currentState == 0:
                 self.currentState = HALF_SSN_INFORMED_STATE
                 return self.currentState
