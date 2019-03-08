@@ -2,8 +2,10 @@ import requests, json
 from Msgtype import *
 from ResultCode import *
 from globalVar import *
+from State import *
 
 class DCA_class:
+    currentState = SSN_INFORMED_STATE
     msgtype = SSP_DCAREQ
 
     # defined by server
@@ -37,7 +39,6 @@ class DCA_class:
         global response, rt
         print("Timer Working")
         response = requests.post(url_1, json=self.packedMsg())
-        print("(check)State in Sensor : HALF_CID_ALLOCATED_STATE")
         rt = response.elapsed.total_seconds()
         print('(check)rspTime :' + str(rt))
         return rt
@@ -62,10 +63,11 @@ class DCA_class:
         rcvdeId = self.json_response['header']['endpointId'] # rcvdEndpointId
         # expLen = rcvdLength - msg.header_size
 
-        if rcvdeId == self.eId:
-            stateCheck = 1
-            if stateCheck == RES_SUCCESS:
-                if rcvdType == self.msgtype:
+        if rcvdeId == self.eId: # rcvdEndpointId = fnGetTemporarySensorId
+            stateCheckResult = self.stateCheck(rcvdType)
+            print("(check)SENSOR STATE : " + str(stateCheckResult))
+            if stateCheckResult == RES_SUCCESS:
+                if rcvdType == self.msgType:
                     # if rcvdLength == expLen:
                     return rcvdPayload
         else:
@@ -78,13 +80,18 @@ class DCA_class:
             self.TTI = self.json_response['payload']['tti']
             self.MOBF = self.json_response['payload']['mobf']
             print("(check)cId :" + str(self.cId))
-            print("(check)State in Sensor : CID_ALLOCATED_STATE")
             return RES_SUCCESS
         else:
-            print("(check)State in Sensor : IDLE_STATE")
             return RES_FAILED
 
+    def stateCheck(self, msgType):
+        if msgType == SSP_SIRRSP:
+            if self.currentState == SSN_INFORMED_STATE:
+                self.currentState = HALF_CID_ALLOCATED_STATE
+                return self.currentState
+
     def init(self):
+        print('(check)current State :' + str(self.currentState))
         print("(check)msgtype : " + str(self.msgtype))
         print("(check)eId(=SSN) : " + str(self.eId))
 
