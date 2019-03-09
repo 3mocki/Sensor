@@ -89,7 +89,7 @@ class SIR_class:
         if msgType == SSP_SIRRSP:
             if self.currentState == IDLE_STATE:
                 self.currentState = HALF_SSN_INFORMED_STATE
-                return True
+                return self.currentState
 
     def init(self):
         print('(check)current State :' + str(self.currentState))

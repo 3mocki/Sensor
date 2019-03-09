@@ -5,7 +5,7 @@ from globalVar import *
 from State import *
 
 class DCA_class:
-    currentState = SSN_INFORMED_STATE
+    currentState_2 = SSN_INFORMED_STATE
     msgType = SSP_DCAREQ
 
     # geoData
@@ -86,12 +86,12 @@ class DCA_class:
 
     def stateCheck(self, msgType):
         if msgType == SSP_DCARSP:
-            if self.currentState == SSN_INFORMED_STATE:
-                self.currentState = HALF_CID_ALLOCATED_STATE
-                return True
+            if self.currentState_2 == SSN_INFORMED_STATE:
+                self.currentState_2 = HALF_CID_ALLOCATED_STATE
+                return self.currentState_2
 
     def init(self):
-        print('(check)current State :' + str(self.currentState))
+        print('(check)current State :' + str(self.currentState_2))
         print("(check)msgType : " + str(self.msgType))
         print("(check)eId(=SSN) : " + str(self.eId))
 
