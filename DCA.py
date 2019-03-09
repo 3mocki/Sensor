@@ -8,7 +8,7 @@ class DCA_class:
     currentState = SSN_INFORMED_STATE
     msgtype = SSP_DCAREQ
 
-    # defined by server
+    # geoData
     payload = {
         "lat": '32.892425',
         "lng": '-117.234657',
@@ -35,7 +35,7 @@ class DCA_class:
         }
         return packedMsg  # return packedMsg
 
-    def setTimer(self):
+    def responseTimer(self):
         global response, rt
         print("Timer Working")
         response = requests.post(url_1, json=self.packedMsg())
@@ -43,17 +43,17 @@ class DCA_class:
         print('(check)rspTime :' + str(rt))
         return rt
 
-    def rcvdMsg(self):
+    def rcvdMsgPayload(self):
         if rt > 5:
             print("Retry Checking response time")
-            self.setTimer()
+            self.responseTimer()
         else:
             self.verifyMsgHeader()
             if rcvdPayload != RES_FAILED:
                 print("check")
                 return rcvdPayload
             else:
-                self.rcvdMsg()
+                self.rcvdMsgPaylaod()
 
     def verifyMsgHeader(self):
         global rcvdPayload
@@ -88,19 +88,19 @@ class DCA_class:
         if msgType == SSP_DCARSP:
             if self.currentState == SSN_INFORMED_STATE:
                 self.currentState = HALF_CID_ALLOCATED_STATE
-                return self.currentState
+                return True
 
     def init(self):
         print('(check)current State :' + str(self.currentState))
         print("(check)msgType : " + str(self.msgtype))
         print("(check)eId(=SSN) : " + str(self.eId))
 
-        self.setTimer()
+        self.responseTimer()
 
         t = response.json()
         print('(check)Received Msg : ' + str(t))  # check log
         data = response.text
         self.json_response = json.loads(data)
 
-        self.rcvdMsg()
+        self.rcvdMsgPayload()
         self.UnpackMsg()
