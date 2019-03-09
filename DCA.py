@@ -6,7 +6,7 @@ from State import *
 
 class DCA_class:
     currentState = SSN_INFORMED_STATE
-    msgtype = SSP_DCAREQ
+    msgType = SSP_DCAREQ
 
     # geoData
     payload = {
@@ -27,7 +27,7 @@ class DCA_class:
     def packedMsg(self):
         packedMsg = {
             "header": {
-                "msgType": self.msgtype,  # msgHeader[0]
+                "msgType": self.msgType,  # msgHeader[0]
                 "msgLen": len(str(self.payload)),  # msgHeader[1:2]
                 "endpointId": self.eId  # msgHeader[3:5]
             },
@@ -92,7 +92,7 @@ class DCA_class:
 
     def init(self):
         print('(check)current State :' + str(self.currentState))
-        print("(check)msgType : " + str(self.msgtype))
+        print("(check)msgType : " + str(self.msgType))
         print("(check)eId(=SSN) : " + str(self.eId))
 
         self.responseTimer()
