@@ -67,7 +67,7 @@ class SIR_class:
 
         if rcvdeId == self.eId: # rcvdEndpointId = fnGetTemporarySensorId
             stateCheckResult = self.stateCheck(rcvdType)
-            print("| SEN | SET | SIR STATE | " + str(stateCheckResult))
+            print("| SEN | SET | SIR STATE | " + str(stateCheckResult) + "=> HALF_SSN_INFORMED_STATE")
             if stateCheckResult == RES_SUCCESS:
                 if rcvdType == self.msgType:
                     # if rcvdLength == expLen:
@@ -94,7 +94,7 @@ class SIR_class:
                 return self.currentState
 
     def init(self):
-        print("| SEN | SET | SIR STATE | " + str(self.currentState))
+        print("| SEN | SET | SIR STATE | " + str(self.currentState) + "=> IDLE STATE")
 
         self.responseTimer()
 
