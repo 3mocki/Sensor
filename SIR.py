@@ -39,7 +39,7 @@ class SIR_class:
 
     def responseTimer(self):
         global response, rt
-        print("Timer Working")
+        # print("Timer Working")
         print("| SEN | PACK| SSP:SIR_REQ")
         response = requests.post(url_1, json=self.packedMsg())  # 2.2 fnSendMsg => json
         print("| SEN | SEND| REQ | SSP:SIR-REQ | " + str(self.packedMsg()))
@@ -68,7 +68,7 @@ class SIR_class:
 
         if rcvdeId == self.eId: # rcvdEndpointId = fnGetTemporarySensorId
             stateCheckResult = self.stateCheck(rcvdType)
-            print("(check)SENSOR STATE : " + str(stateCheckResult))
+            print("| SEN | SET | SIR STATE | " + str(stateCheckResult))
             if stateCheckResult == RES_SUCCESS:
                 if rcvdType == self.msgType:
                     # if rcvdLength == expLen:
@@ -95,7 +95,7 @@ class SIR_class:
                 return self.currentState
 
     def init(self):
-        print("| SEN | SET | SIR STATE |" + str(self.currentState))
+        print("| SEN | SET | SIR STATE | " + str(self.currentState))
 
         self.responseTimer()
 
