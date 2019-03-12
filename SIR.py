@@ -35,12 +35,12 @@ class SIR_class:
             },
             "payload" : self.payload
         }
-        print("| SEN | PACK| SSP:SIR_REQ")
         return packedMsg # 1.6 return packedMsg
 
     def responseTimer(self):
         global response, rt
         print("Timer Working")
+        print("| SEN | PACK| SSP:SIR_REQ")
         response = requests.post(url_1, json=self.packedMsg())  # 2.2 fnSendMsg => json
         print("| SEN | SEND| REQ | SSP:SIR-REQ | " + str(self.packedMsg()))
         rt = response.elapsed.total_seconds()
@@ -79,6 +79,7 @@ class SIR_class:
     def UnpackMsg(self):
         if self.json_response['payload']['resultCode'] == RESCODE_SSP_SIR_OK: # 4.1
             self.ssn = self.json_response['payload']['ssn'] # 4.2
+            print("| SEN | UNPK| PYLD| SSP:SIR-RSP")
             print("(check)ssn :" + (self.ssn))
         else:
             if self.json_response['payload']['resultCode'] == RESCODE_SSP_SIR_CONFLICT_OF_TEMPORARY_SENSOR_ID:
@@ -95,14 +96,11 @@ class SIR_class:
 
     def init(self):
         print('(check)current State :' + str(self.currentState))
-        print('(check)MAC : ' + str(self.mac))
-        print('(check)msgType : ' + str(self.msgType))
-        print('(check)eId : ' + str(self.eId))
 
         self.responseTimer()
 
         t = response.json()
-        print('(check)Received Msg : ' + str(t))  # check log
+        print("| SEN | RCVD| RSP | " + str(t))
         data = response.text
         self.json_response = json.loads(data)
 
