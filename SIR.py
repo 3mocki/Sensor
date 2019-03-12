@@ -44,7 +44,7 @@ class SIR_class:
         response = requests.post(url_1, json=self.packedMsg())  # 2.2 fnSendMsg => json
         print("| SEN | SEND| REQ | SSP:SIR-REQ | " + str(self.packedMsg()))
         rt = response.elapsed.total_seconds()
-        print('(check)rspTime :' + str(rt))
+        # print('(check)rspTime :' + str(rt))
         return rt
 
     # 3.1 fnRecvMsg()
@@ -95,7 +95,7 @@ class SIR_class:
                 return self.currentState
 
     def init(self):
-        print('(check)current State :' + str(self.currentState))
+        print("| SEN | SET | SIR STATE |" + str(self.currentState))
 
         self.responseTimer()
 
