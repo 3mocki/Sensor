@@ -42,7 +42,7 @@ class SIR_class:
         global response, rt
         print("Timer Working")
         response = requests.post(url_1, json=self.packedMsg())  # 2.2 fnSendMsg => json
-        print("| SEN | SEND| REQ | SSP:SIR-REQ | " + str(self.packedMsg))
+        print("| SEN | SEND| REQ | SSP:SIR-REQ | " + str(self.packedMsg()))
         rt = response.elapsed.total_seconds()
         print('(check)rspTime :' + str(rt))
         return rt
