@@ -35,6 +35,7 @@ class SIR_class:
             },
             "payload" : self.payload
         }
+        print("packedMsg" + str(packedMsg))
         return packedMsg # 1.6 return packedMsg
 
     def responseTimer(self):
