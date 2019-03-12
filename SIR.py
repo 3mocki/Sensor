@@ -55,7 +55,6 @@ class SIR_class:
         else:
             self.verifyMsgHeader()
             if rcvdPayload != RES_FAILED:
-                print("check")
                 return rcvdPayload
 
     def verifyMsgHeader(self): # 3.3.1
@@ -80,7 +79,7 @@ class SIR_class:
         if self.json_response['payload']['resultCode'] == RESCODE_SSP_SIR_OK: # 4.1
             self.ssn = self.json_response['payload']['ssn'] # 4.2
             print("| SEN | UNPK| PYLD| SSP:SIR-RSP")
-            print("(check)ssn :" + (self.ssn))
+            # print("(check)ssn :" + (self.ssn))
         else:
             if self.json_response['payload']['resultCode'] == RESCODE_SSP_SIR_CONFLICT_OF_TEMPORARY_SENSOR_ID:
                 self.responseTimer()
